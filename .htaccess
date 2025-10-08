@@ -1,0 +1,9 @@
+RewriteEngine On
+RewriteBase /test/qr-main/
+
+# Если файл или директория существуют, отдаём их напрямую
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Все остальные запросы перенаправляем на router.php
+RewriteRule ^(.*)$ router.php [QSA,L]
