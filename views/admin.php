@@ -1,6 +1,6 @@
 <?php
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'admin') {
-    header('Location: /');
+    header('Location: ' . BASE_PATH . '/');
     exit;
 }
 ?>
@@ -181,7 +181,7 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'admin') {
 <body>
     <div class="header">
         <h1>Панель администратора</h1>
-        <a href="/logout" class="logout-btn">Выход</a>
+        <a href="<?php echo BASE_PATH; ?>/logout" class="logout-btn">Выход</a>
     </div>
 
     <div class="container">
@@ -317,6 +317,6 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'admin') {
         </div>
     </div>
 
-    <script src="/assets/admin.js"></script>
+    <script src="<?php echo BASE_PATH; ?>/assets/admin.js"></script>
 </body>
 </html>

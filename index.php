@@ -6,14 +6,27 @@ require_once 'database.php';
 // Инициализация БД
 Database::init();
 
-// Простой роутинг
+// Определяем базовый путь
+define('BASE_PATH', '/test/qr-main');
+
+// Получаем URI и убираем базовый путь
 $request = $_SERVER['REQUEST_URI'];
 $path = parse_url($request, PHP_URL_PATH);
 
-// Удаляем query string из пути
+// Убираем базовый путь из URL
+if (strpos($path, BASE_PATH) === 0) {
+    $path = substr($path, strlen(BASE_PATH));
+}
+
+// Если путь пустой, ставим /
+if (empty($path) || $path === '') {
+    $path = '/';
+}
+
+// Убираем query string
 $route = strtok($path, '?');
 
-// Роутинг с поддержкой вложенных путей
+// Роутинг
 if ($route === '/' || $route === '/index.php') {
     require 'views/login.php';
 } elseif ($route === '/login') {
@@ -47,7 +60,6 @@ if ($route === '/' || $route === '/index.php') {
 } elseif (strpos($route, '/api/lesson-status') === 0) {
     require 'api/lesson-status.php';
 } elseif (strpos($route, '/assets/') === 0) {
-    // Статические файлы обрабатываются встроенным сервером
     return false;
 } else {
     http_response_code(404);

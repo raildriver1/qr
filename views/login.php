@@ -1,8 +1,9 @@
 <?php
 if (isset($_SESSION['user_type'])) {
-    header('Location: /' . $_SESSION['user_type']);
+    header('Location: ' . BASE_PATH . '/' . $_SESSION['user_type']);
     exit;
 }
+?>
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -105,7 +106,7 @@ if (isset($_SESSION['user_type'])) {
             </div>
         <?php endif; ?>
         
-        <form method="POST" action="/login">
+        <form method="POST" action="<?php echo BASE_PATH; ?>/login">
             <div class="form-group">
                 <label for="login">Логин</label>
                 <input type="text" id="login" name="login" required autofocus>

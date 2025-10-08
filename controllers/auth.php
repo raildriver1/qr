@@ -1,6 +1,6 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: /');
+    header('Location: ' . BASE_PATH . '/');
     exit;
 }
 
@@ -9,7 +9,7 @@ $password = $_POST['password'] ?? '';
 
 if (empty($login) || empty($password)) {
     $_SESSION['error'] = 'Заполните все поля';
-    header('Location: /');
+    header('Location: ' . BASE_PATH . '/');
     exit;
 }
 
@@ -24,7 +24,7 @@ if ($admin && password_verify($password, $admin['password'])) {
     $_SESSION['user_id'] = $admin['id'];
     $_SESSION['user_type'] = 'admin';
     $_SESSION['user_name'] = 'Администратор';
-    header('Location: /admin');
+    header('Location: ' . BASE_PATH . '/admin');
     exit;
 }
 
@@ -37,10 +37,10 @@ if ($teacher && $teacher['password'] === $password) {
     $_SESSION['user_id'] = $teacher['id'];
     $_SESSION['user_type'] = 'teacher';
     $_SESSION['user_name'] = $teacher['full_name'];
-    header('Location: /teacher');
+    header('Location: ' . BASE_PATH . '/teacher');
     exit;
 }
 
 $_SESSION['error'] = 'Неверный логин или пароль';
-header('Location: /');
+header('Location: ' . BASE_PATH . '/');
 exit;
