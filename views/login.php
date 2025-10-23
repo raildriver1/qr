@@ -4,7 +4,6 @@ if (isset($_SESSION['user_type'])) {
     exit;
 }
 ?>
-?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>

@@ -282,6 +282,7 @@ $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 
     <script>
+        const BASE_PATH = '<?php echo BASE_PATH; ?>';
         const lessonId = <?php echo $lesson['id']; ?>;
         const qrCode = '<?php echo $qrCode; ?>';
         
@@ -320,7 +321,7 @@ $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
             btn.textContent = 'Отмечаем...';
             
             try {
-                const response = await fetch('/api/student/mark', {
+                const response = await fetch(BASE_PATH + '/api/student/mark', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({

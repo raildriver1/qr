@@ -211,7 +211,7 @@ $groups = $db->query("SELECT * FROM groups ORDER BY name")->fetchAll(PDO::FETCH_
         <h1>Кабинет преподавателя</h1>
         <div class="user-info">
             <span><?php echo $_SESSION['user_name']; ?></span>
-            <a href="/logout" class="logout-btn">Выход</a>
+            <a href="<?php echo BASE_PATH; ?>/logout" class="logout-btn">Выход</a>
         </div>
     </div>
 
@@ -305,8 +305,10 @@ $groups = $db->query("SELECT * FROM groups ORDER BY name")->fetchAll(PDO::FETCH_
             </table>
         </div>
     </div>
-
+<script>
+        window.BASE_PATH = '<?php echo BASE_PATH; ?>';
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script src="/assets/teacher.js"></script>
+    <script src="<?php echo BASE_PATH; ?>/assets/teacher.js"></script>
 </body>
 </html>

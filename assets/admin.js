@@ -1,3 +1,6 @@
+// Базовый путь - работает и в подпапке, и в корне
+const BASE_PATH = window.BASE_PATH || '';
+
 // Переключение табов
 function switchTab(tabName) {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -21,7 +24,7 @@ function showMessage(containerId, message, type = 'success') {
 
 // ==================== ПРЕПОДАВАТЕЛИ ====================
 async function loadTeachers() {
-    const response = await fetch('/api/admin/teachers');
+    const response = await fetch(BASE_PATH + '/api/admin/teachers');
     const data = await response.json();
     
     const tbody = document.querySelector('#teachers-table tbody');
@@ -46,7 +49,7 @@ async function loadTeachers() {
 }
 
 async function loadSubjectsForTeacher() {
-    const response = await fetch('/api/admin/subjects');
+    const response = await fetch(BASE_PATH + '/api/admin/subjects');
     const subjects = await response.json();
     
     const container = document.getElementById('teacher-subjects');
@@ -77,7 +80,7 @@ document.getElementById('teacher-form').addEventListener('submit', async (e) => 
     };
     
     const method = id ? 'PUT' : 'POST';
-    const url = id ? `/api/admin/teachers?id=${id}` : '/api/admin/teachers';
+    const url = id ? `${BASE_PATH}/api/admin/teachers?id=${id}` : `${BASE_PATH}/api/admin/teachers`;
     
     const response = await fetch(url, {
         method,
@@ -95,7 +98,7 @@ document.getElementById('teacher-form').addEventListener('submit', async (e) => 
 });
 
 function editTeacher(id) {
-    fetch(`/api/admin/teachers?id=${id}`)
+    fetch(`${BASE_PATH}/api/admin/teachers?id=${id}`)
         .then(r => r.json())
         .then(teacher => {
             document.getElementById('teacher-id').value = teacher.id;
@@ -112,7 +115,7 @@ function editTeacher(id) {
 async function deleteTeacher(id) {
     if (!confirm('Удалить преподавателя?')) return;
     
-    const response = await fetch(`/api/admin/teachers?id=${id}`, {method: 'DELETE'});
+    const response = await fetch(`${BASE_PATH}/api/admin/teachers?id=${id}`, {method: 'DELETE'});
     const result = await response.json();
     showMessage('teachers-message', result.message, result.success ? 'success' : 'error');
     
@@ -127,7 +130,7 @@ function resetTeacherForm() {
 
 // ==================== ГРУППЫ ====================
 async function loadGroups() {
-    const response = await fetch('/api/admin/groups');
+    const response = await fetch(BASE_PATH + '/api/admin/groups');
     const data = await response.json();
     
     const tbody = document.querySelector('#groups-table tbody');
@@ -153,7 +156,7 @@ document.getElementById('group-form').addEventListener('submit', async (e) => {
     const data = {name: document.getElementById('group-name').value};
     
     const method = id ? 'PUT' : 'POST';
-    const url = id ? `/api/admin/groups?id=${id}` : '/api/admin/groups';
+    const url = id ? `${BASE_PATH}/api/admin/groups?id=${id}` : `${BASE_PATH}/api/admin/groups`;
     
     const response = await fetch(url, {
         method,
@@ -171,7 +174,7 @@ document.getElementById('group-form').addEventListener('submit', async (e) => {
 });
 
 function editGroup(id) {
-    fetch(`/api/admin/groups?id=${id}`)
+    fetch(`${BASE_PATH}/api/admin/groups?id=${id}`)
         .then(r => r.json())
         .then(group => {
             document.getElementById('group-id').value = group.id;
@@ -182,7 +185,7 @@ function editGroup(id) {
 async function deleteGroup(id) {
     if (!confirm('Удалить группу?')) return;
     
-    const response = await fetch(`/api/admin/groups?id=${id}`, {method: 'DELETE'});
+    const response = await fetch(`${BASE_PATH}/api/admin/groups?id=${id}`, {method: 'DELETE'});
     const result = await response.json();
     showMessage('groups-message', result.message, result.success ? 'success' : 'error');
     
@@ -196,7 +199,7 @@ function resetGroupForm() {
 
 // ==================== ПРЕДМЕТЫ ====================
 async function loadSubjects() {
-    const response = await fetch('/api/admin/subjects');
+    const response = await fetch(BASE_PATH + '/api/admin/subjects');
     const data = await response.json();
     
     const tbody = document.querySelector('#subjects-table tbody');
@@ -222,7 +225,7 @@ document.getElementById('subject-form').addEventListener('submit', async (e) => 
     const data = {name: document.getElementById('subject-name').value};
     
     const method = id ? 'PUT' : 'POST';
-    const url = id ? `/api/admin/subjects?id=${id}` : '/api/admin/subjects';
+    const url = id ? `${BASE_PATH}/api/admin/subjects?id=${id}` : `${BASE_PATH}/api/admin/subjects`;
     
     const response = await fetch(url, {
         method,
@@ -240,7 +243,7 @@ document.getElementById('subject-form').addEventListener('submit', async (e) => 
 });
 
 function editSubject(id) {
-    fetch(`/api/admin/subjects?id=${id}`)
+    fetch(`${BASE_PATH}/api/admin/subjects?id=${id}`)
         .then(r => r.json())
         .then(subject => {
             document.getElementById('subject-id').value = subject.id;
@@ -251,7 +254,7 @@ function editSubject(id) {
 async function deleteSubject(id) {
     if (!confirm('Удалить предмет?')) return;
     
-    const response = await fetch(`/api/admin/subjects?id=${id}`, {method: 'DELETE'});
+    const response = await fetch(`${BASE_PATH}/api/admin/subjects?id=${id}`, {method: 'DELETE'});
     const result = await response.json();
     showMessage('subjects-message', result.message, result.success ? 'success' : 'error');
     
@@ -265,7 +268,7 @@ function resetSubjectForm() {
 
 // ==================== СТУДЕНТЫ ====================
 async function loadStudents() {
-    const response = await fetch('/api/admin/students');
+    const response = await fetch(BASE_PATH + '/api/admin/students');
     const data = await response.json();
     
     const tbody = document.querySelector('#students-table tbody');
@@ -288,7 +291,7 @@ async function loadStudents() {
 }
 
 async function loadGroupsForStudent() {
-    const response = await fetch('/api/admin/groups');
+    const response = await fetch(BASE_PATH + '/api/admin/groups');
     const groups = await response.json();
     
     const select = document.getElementById('student-group');
@@ -312,7 +315,7 @@ document.getElementById('student-form').addEventListener('submit', async (e) => 
     };
     
     const method = id ? 'PUT' : 'POST';
-    const url = id ? `/api/admin/students?id=${id}` : '/api/admin/students';
+    const url = id ? `${BASE_PATH}/api/admin/students?id=${id}` : `${BASE_PATH}/api/admin/students`;
     
     const response = await fetch(url, {
         method,
@@ -330,7 +333,7 @@ document.getElementById('student-form').addEventListener('submit', async (e) => 
 });
 
 function editStudent(id) {
-    fetch(`/api/admin/students?id=${id}`)
+    fetch(`${BASE_PATH}/api/admin/students?id=${id}`)
         .then(r => r.json())
         .then(student => {
             document.getElementById('student-id').value = student.id;
@@ -342,7 +345,7 @@ function editStudent(id) {
 async function deleteStudent(id) {
     if (!confirm('Удалить студента?')) return;
     
-    const response = await fetch(`/api/admin/students?id=${id}`, {method: 'DELETE'});
+    const response = await fetch(`${BASE_PATH}/api/admin/students?id=${id}`, {method: 'DELETE'});
     const result = await response.json();
     showMessage('students-message', result.message, result.success ? 'success' : 'error');
     

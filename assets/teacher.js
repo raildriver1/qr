@@ -1,3 +1,6 @@
+// Базовый путь - работает и в подпапке, и в корне
+const BASE_PATH = window.BASE_PATH || '';
+
 let currentLessonId = null;
 let timerInterval = null;
 
@@ -23,7 +26,7 @@ document.getElementById('lesson-form').addEventListener('submit', async (e) => {
         topic: document.getElementById('topic').value
     };
     
-    const response = await fetch('/api/teacher/create-lesson', {
+    const response = await fetch(BASE_PATH + '/api/teacher/create-lesson', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(data)
@@ -50,7 +53,7 @@ function showActiveLesson(data) {
     const qrContainer = document.getElementById('qr-code');
     qrContainer.innerHTML = '';
     
-    const url = window.location.origin + '/student?code=' + data.qr_code;
+    const url = window.location.origin + BASE_PATH + '/student?code=' + data.qr_code;
     
     // Проверяем что QRCode загружен
     if (typeof QRCode === 'undefined') {
@@ -105,7 +108,7 @@ function startTimer(createdAt) {
 }
 
 async function loadStudents(groupId) {
-    const response = await fetch(`/api/lesson-status?lesson_id=${currentLessonId}`);
+    const response = await fetch(BASE_PATH + `/api/lesson-status?lesson_id=${currentLessonId}`);
     const data = await response.json();
     
     const container = document.getElementById('students-container');
@@ -130,7 +133,7 @@ async function loadStudents(groupId) {
 }
 
 async function updateAttendance() {
-    const response = await fetch(`/api/lesson-status?lesson_id=${currentLessonId}`);
+    const response = await fetch(BASE_PATH + `/api/lesson-status?lesson_id=${currentLessonId}`);
     const data = await response.json();
     
     const container = document.getElementById('students-container');
@@ -155,7 +158,7 @@ async function updateAttendance() {
 }
 
 async function manualMark(studentId) {
-    const response = await fetch('/api/teacher/manual-mark', {
+    const response = await fetch(BASE_PATH + '/api/teacher/manual-mark', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -185,7 +188,7 @@ function endLesson() {
 
 // История занятий
 async function loadLessons() {
-    const response = await fetch('/api/teacher/lessons');
+    const response = await fetch(BASE_PATH + '/api/teacher/lessons');
     const lessons = await response.json();
     
     const tbody = document.querySelector('#lessons-table tbody');
@@ -217,5 +220,5 @@ function doExport() {
         return;
     }
     
-    window.location.href = `/api/teacher/export?group_id=${groupId}`;
+    window.location.href = `${BASE_PATH}/api/teacher/export?group_id=${groupId}`;
 }

@@ -6,16 +6,15 @@ require_once 'database.php';
 // Инициализация БД
 Database::init();
 
-// Определяем базовый путь (для Apache в поддиректории)
-// Если на сервере в корне - оставьте пустым: define('BASE_PATH', '');
+// Определяем базовый путь
 define('BASE_PATH', '/test/qr-main');
 
-// Получаем URI
+// Получаем URI и убираем базовый путь
 $request = $_SERVER['REQUEST_URI'];
 $path = parse_url($request, PHP_URL_PATH);
 
-// Убираем базовый путь из URL (если есть)
-if (!empty(BASE_PATH) && strpos($path, BASE_PATH) === 0) {
+// Убираем базовый путь из URL
+if (strpos($path, BASE_PATH) === 0) {
     $path = substr($path, strlen(BASE_PATH));
 }
 
@@ -61,7 +60,6 @@ if ($route === '/' || $route === '/index.php') {
 } elseif (strpos($route, '/api/lesson-status') === 0) {
     require 'api/lesson-status.php';
 } elseif (strpos($route, '/assets/') === 0) {
-    // Статические файлы
     return false;
 } else {
     http_response_code(404);

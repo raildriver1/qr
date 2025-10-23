@@ -316,7 +316,9 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'admin') {
             </table>
         </div>
     </div>
-
+<script>
+        window.BASE_PATH = '<?php echo BASE_PATH; ?>';
+    </script>
     <script src="<?php echo BASE_PATH; ?>/assets/admin.js"></script>
 </body>
 </html>
